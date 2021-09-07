@@ -12,7 +12,6 @@ dotenv.config();
 //  "mongodb+srv://dhinesh:admin123@cluster0.ipizq.mongodb.net/?retryWrites=true&w=majority";
 const url = process.env.DB;
 const PORT = process.env.PORT || 3000;
-
 app.use(
   cors({
     origin: "*",
