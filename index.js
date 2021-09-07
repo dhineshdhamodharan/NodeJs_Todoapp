@@ -7,9 +7,10 @@ const jwt = require("jsonwebtoken");
 const mongoClient = mongodb.MongoClient;
 const dotenv = require("dotenv");
 dotenv.config();
+//console.log(process.env);
 //const url =
 //  "mongodb+srv://dhinesh:admin123@cluster0.ipizq.mongodb.net/?retryWrites=true&w=majority";
-const url = "process.env.DB";
+const url = process.env.DB;
 const PORT = process.env.PORT || 3000;
 
 app.use(
@@ -104,7 +105,7 @@ app.post("/login", async function (req, res) {
       );
       if (matchPassword) {
         //generate JWT token
-        let token = jwt.sign({ id: user._id }, "JWT_SECRET");
+        let token = jwt.sign({ id: user._id }, process.env.JWT_SECERT);
         console.log(token);
         res.json({
           message: true,
