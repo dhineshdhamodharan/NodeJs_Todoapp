@@ -34,6 +34,7 @@ function authenticate(req, res, next) {
             });
           } else {
             console.log(decoded);
+            req.userid = decoded.id;
             next();
           }
         }
@@ -135,7 +136,10 @@ app.get("/todolist", [authenticate], async function (req, res) {
     let db = client.db("todo-app");
 
     //select the collection and perform action
-    let data = await db.collection("tasks").find({}).toArray();
+    let data = await db
+      .collection("tasks")
+      .find({ userid: req.userid })
+      .toArray();
 
     //closing the connection
     await client.close();
@@ -157,6 +161,7 @@ app.post("/create-task", [authenticate], async function (req, res) {
     let db = client.db("todo-app");
 
     //select the collection and perform action
+    req.body.userid = req.userid;
     let data = await db.collection("tasks").insertOne(req.body);
 
     //closing the connection
